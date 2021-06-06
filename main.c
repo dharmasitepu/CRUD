@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdbool.h>
 
 FILE *db_user;
 FILE *isi_data;
+FILE *up_member;
+FILE *v_akun;
 void usermenu();
 void pesanan();
-void cekstatus();
 void adminmenu();
 void registrasi();
 void daftarpesanan();
@@ -18,16 +18,17 @@ void hapuspesanan();
 void hapusmember();
 void infoobat();
 void vakun();
-int p,luser,ladmin,total,berat,loginadminmenu;
-bool ceknampes(char nampes[100]);
-bool caripesan(char nampes[100]);
+void cod();
+void bank();
+
+int p,luser,ladmin,total,berat,loginadminmenu,checkout;
 struct
 {
     char nama[100],username[100],pass[100],cari1[100],cari2[100],status[100];
     char user[100],nam[100],alamat[100],telp[100],tgl[100],usernamea[100],passa[50];
-    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100],z[100];
+    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100],z[100],penyakit[100],up_member[100];
     int biaya, salah, stt ;
-} daftar,logina,dtobat;
+} daftar,logina,dtobat,pesan;
 
 void main()
 {
@@ -172,13 +173,17 @@ void dataobat(int n, int i)
     data_obat=fopen("data_obat.dat","rb");
     while(fread(&dtobat,sizeof(dtobat),1,data_obat)==1)
     {
-        printf("Nama Obat           : %s ",dtobat.data_obat);
-        printf("kategori penyakit   : %s ",dtobat.kt_penyakit);
-        printf("Dosis               : %s ",dtobat.dt_dosis);
-        printf("Harga               : %s ",dtobat.dt_harga);
+        printf("\nNama Obat           : %s\n ",dtobat.data_obat);
+        printf("kategori penyakit   : %s\n",dtobat.kt_penyakit);
+        printf("Dosis               : %s\n ",dtobat.dt_dosis);
+        printf("Harga               : %s\n ",dtobat.dt_harga);
     }
     fclose(data_obat);
+    system("pause");
+    system("cls");
+    adminmenu();
 }
+
 
 
 void updateobat()
@@ -208,7 +213,11 @@ void updateobat()
     printf("\nDosis               : %s ",dtobat.dt_dosis);
     printf("\nHarga               : %s ",dtobat.dt_harga);
     fclose(data_obat);
+    system("pause");
+    system("cls");
+    adminmenu();
 }
+
 
 
 
@@ -226,6 +235,9 @@ void infoobat()
 
     }
     fclose(data_obat);
+    system("pause");
+    system("cls");
+    adminmenu();
 }
 
 
@@ -276,11 +288,38 @@ void vakun()
 
 void upmemb()
 {
-   system("cls");
+    system ("cls");
+    FILE *up_member;
+    up_member=fopen("db_user","wb");
+    printf("    \nEnter untuk edit data member\n");
+    gets(daftar.up_member);
+    printf("    Username           : ");
+    gets(daftar.username);
+    printf("    Password           : ");
+    gets(daftar.pass);
+    printf("    Nama               : ");
+    gets(daftar.nama);
+    printf("    Alamat             : ");
+    gets(daftar.alamat);
+    printf("    NO hp              : ");
+    gets(daftar.telp);
+    fwrite(&daftar,sizeof(daftar),1,up_member);
 
+    fclose(up_member);
+    printf("\n\nOutput\n");
+    up_member=fopen("db_user","rb");
 
-
+    printf("Username    : %s ",daftar.username);
+    printf("\nPassword  : %s ",daftar.pass);
+    printf("\nNama     : %s ",daftar.nama);
+    printf("\nAlamat     : %s ",daftar.alamat);
+    printf("\nNO hp     : %s ",daftar.telp);
+    fclose(up_member);
+    system("pause");
+    system("cls");
+    adminmenu();
 }
+
 void hapusmember()
 {
     system("cls");
@@ -328,7 +367,7 @@ void registrasi()
     printf("Regist Berhasil , Silahkan Login");
     getchar();
 
-    FILE *out=fopen("db_user.dat","a");
+    FILE *out=fopen("db_user.dat","ab");
     fprintf(out,"%s#%s#%s#%s#%s#STOP#\n", daftar.username, daftar.pass, daftar.nama, daftar.alamat, daftar.telp);
     fclose(out);
     main();
@@ -359,8 +398,9 @@ void login(FILE *in, char username[100], char password[100])
 
 void loginuser()
 {
-    db_user = fopen("save.dat","rb+");
+    db_user = fopen("db_user.dat","rb+");
     system("cls");
+
     puts("\t\t\t================================");
     puts("\t\t\t SELAMAT DATANG DI TOKO OBAT    ");
     puts("\t\t\t================================");
@@ -369,15 +409,15 @@ void loginuser()
     {
         printf("Username : ");
         fflush(stdin);
-        gets(daftar.cari1);
+        gets(daftar.username);
         printf("Password : ");
-        gets(daftar.cari2);
+        gets(daftar.pass);
 
         FILE *in=fopen("db_user.dat","r");
 
-        if(strcmp(daftar.cari1, daftar.cari2)==0)
+        if(strcmp(daftar.username, daftar.pass) && strcmp(daftar.username, daftar.pass)!=0)
         {
-            printf("Selamat Datang, %s\n", logina.nama);
+            printf("Selamat Datang\n");
             system("pause");
             system("cls");
             usermenu ();
@@ -406,8 +446,7 @@ void usermenu()
     printf("\t\t\t\t SELAMAT DATANG %s \n",logina.nama);
     puts("Menu : ");
     puts("1. Buat Pesanan");
-    puts("2. Cek Status");
-    puts("3. Exit ");;
+    puts("2. Exit ");;
     printf("Pilihan : ");
     scanf("%d",&luser);
     switch(luser)
@@ -419,11 +458,6 @@ void usermenu()
     }
     case 2:
     {
-        cekstatus();
-        break;
-    }
-    case 3:
-    {
         main();
         break;
         default :
@@ -432,179 +466,79 @@ void usermenu()
     }
 }
 
-bool caripesan(char nampes[100])
-{
-    FILE *in = fopen("barang.dat","r");
-
-    bool ketemu = false;
-    char nam[100], alamat[100], telp[100], tgl[100], user[100], nama[100];
-
-    if(!in)
-    {
-        return ketemu;
-    }
-    else
-    {
-        while(!feof(in) && !ketemu)
-        {
-            fscanf(in,"%[^#]#", &nam);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &alamat);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &telp);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &tgl);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &user);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &nama);
-            fflush(stdin);
-
-            if(strcmp(nam,nampes)==0)
-            {
-                ketemu = true;
-            }
-            fscanf(in,"\n");
-            fflush(stdin);
-        }
-    }
-    fclose(in);
-
-    return ketemu;
-}
-
 void pesanan()
 {
     system ("cls");
-    FILE *isi_data;
-    isi_data=fopen("barang.dat","a");
+    FILE *data_obat;
+    FILE *penyakit;
+    char sakit;
+    int n;
+    data_obat=fopen("data_obat.dat","rb");
+    //penyakit=fopen("penyakit.dat","wb");
     fflush(stdin);
     puts("\t\t\t================================");
     puts("\t\t\t SELAMAT DATANG DI MEDICINE");
     puts("\t\t\t================================");
-    printf("\t\t\t\t SELAMAT DATANG %s \n",logina.nama);
-    printf("Masukkan User\t: ");
-    gets(daftar.user);
-    printf("Nama pesanan\t: ");
-    gets(daftar.nam);
-    printf("Alamat\t\t: ");
-    gets(daftar.alamat);
-    printf("No Telp\t\t: ");
-    gets(daftar.telp);
-    printf("Tanggal Pemesanan: \n");
-    printf("Tanggal\t\t: ");
-    gets(daftar.tgl);
-
-    if(!caripesan(daftar.nam))
+    printf("\t\t\t\t SELAMAT DATANG\n");
+    while(fread(&dtobat,sizeof(dtobat),1,data_obat)==1)
     {
-        fprintf(isi_data,"%s#%s#%s#%s#%s#%s#\n", daftar.nam, daftar.alamat, daftar.telp, daftar.tgl, daftar.user, logina.nama);
-        printf("Berhasil Menambahkan Pesanan\n\n");
+        printf("\nNama Obat         : %s\n ",dtobat.data_obat);
+        printf("kategori penyakit   : %s\n ",dtobat.kt_penyakit);
+        printf("Dosis               : %s\n ",dtobat.dt_dosis);
+        printf("Harga               : %s\n ",dtobat.dt_harga);
     }
-    else
     {
-        printf("Gagal Menambahkan Karena Nama Pesan sudah ada\n\n");
+        printf("Ketik Kategori penyakit untuk membeli obat 1-3 :");
+        scanf("%d", &n);
+        getchar();
     }
+    //fclose(penyakit);
+    system("pause");
+    system("cls");
 
-    fclose(isi_data);
 
+
+
+    puts("Menu : ");
+    puts("1. COD");
+    puts("2. BANK ");;
+    printf("Pilihan : ");scanf("%d", &checkout);
+    switch(checkout)
+    {
+    case 1:
+    {
+        cod();
+        break;
+    }
+    case 2:
+    {
+        bank();
+        break;
+        default :
+            printf ("Error!");
+            system("pause");
+            system("cls");
+            pesanan();
+        }
+    }
+}
+
+void cod()
+{
+    printf("Cash On Delivery\n");
+    printf("Obat akan segera dikirim\n");
+    printf("Terima Kasih\n");
     system("pause");
     system("cls");
     usermenu();
 }
 
-
-int caristatus(char nam[100])
-{
-    FILE *in = fopen("status.dat","r");
-
-    char nampes[100];
-    bool ketemu = false;
-
-    if(!in)
-    {
-        return 0;
-    }
-    else
-    {
-        while(!feof(in) && !ketemu)
-        {
-            fscanf(in,"%[^#]#", &nampes);
-            fflush(stdin);
-            fscanf(in,"%[^#]#", &daftar.status);
-            fflush(stdin);
-
-            if(strcmp(nam,nampes)==0)
-            {
-                ketemu = true;
-            }
-            fscanf(in,"\n");
-            fflush(stdin);
-        }
-    }
-    fclose(in);
-
-    if(ketemu)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-void cekstatus()
-{
-    system("cls");
-    FILE *db_user;
-    int i = 0;
-    db_user = fopen("barang.dat","r");
-    if(!db_user)
-    {
-        //Tidak ada db_user status
-    }
-    else
-    {
-        while(!feof(db_user))
-        {
-            fscanf(db_user,"%[^#]#", &daftar.nam);
-            fflush(stdin);
-            fscanf(db_user,"%[^#]#", &daftar.alamat);
-            fflush(stdin);
-            fscanf(db_user,"%[^#]#", &daftar.telp);
-            fflush(stdin);
-            fscanf(db_user,"%[^#]#", &daftar.tgl);
-            fflush(stdin);
-            fscanf(db_user,"%[^#]#", &daftar.user);
-            fflush(stdin);
-            fscanf(db_user,"%[^#]#", &daftar.nama);
-            fflush(stdin);
-
-            if(strcmp(daftar.cari1,daftar.user)==0)
-            {
-                i += 1;
-                printf("Pesanan ke-%d\n",i);
-                printf("Nama pesana	: %s\n", daftar.nam);
-                printf("Alamat		: %s\n", daftar.alamat);
-                printf("No Telp		: %s\n", daftar.telp);
-                printf("Tanggal		: %s\n", daftar.tgl);
-
-                if(caristatus(daftar.nam)==1)
-                {
-                    printf("Status		: Pesanan Selesai dengan Biaya Rp %d\n\n", daftar.biaya);
-                }
-                else
-                {
-                    printf("Status		: Pesanan dalam Proses\n\n");
-                }
-            }
-
-            fscanf(db_user,"\n");
-            fflush(stdin);
-        }
-    }
-
-    fclose(db_user);
+void bank()
+{   FILE *v_akun;
+    char v_hasil;
+    v_akun=fopen("v_akun.dat","a=rb");
+    v_hasil=v_akun+v_hasil;
+    printf("NO Rekening Anda Adalah : %d\n",v_hasil);fflush(stdin);
     system("pause");
     system("cls");
     usermenu();
