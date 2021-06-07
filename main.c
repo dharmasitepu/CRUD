@@ -2,9 +2,9 @@
 #include<string.h>
 
 FILE *db_user;
-FILE *isi_data;
-FILE *up_member;
+FILE *data_obat;
 FILE *v_akun;
+void main();
 void usermenu();
 void pesanan();
 void adminmenu();
@@ -20,13 +20,12 @@ void infoobat();
 void vakun();
 void cod();
 void bank();
-
 int p,luser,ladmin,total,berat,loginadminmenu,checkout;
 struct
 {
     char nama[100],username[100],pass[100],cari1[100],cari2[100],status[100];
     char user[100],nam[100],alamat[100],telp[100],tgl[100],usernamea[100],passa[50];
-    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100],z[100],penyakit[100],up_member[100];
+    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100],z[100],penyakit[100],db_user[100];
     int biaya, salah, stt ;
 } daftar,logina,dtobat,pesan;
 
@@ -34,9 +33,9 @@ void main()
 {
 ulang:
     system("cls");
-    puts("\t\t\t================================");
-    puts("\t\t\t SELAMAT DATANG DI TOKO OBAT");
-    puts("\t\t\t================================");
+    puts("################################");
+    puts("####       TOKO OBAT        ####");
+    puts("################################\n\n");
     puts("1. Login Admin");
     puts("2. Registrasi");
     puts("3. Login User ");
@@ -64,10 +63,9 @@ ulang:
 void loginadmin()
 {
     system("cls");
-    puts("\t\t\t================================");
-    puts("\t\t\t SELAMAT DATANG DI MEDICINE ");
-    puts("\t\t\t================================");
-    puts("\t\t\t\t Login Admin\n");
+    puts("################################");
+    puts("####       LOGIN ADMIN      ####");
+    puts("################################\n\n");
     printf("username : ");
     fflush(stdin);
     gets(logina.usernamea);
@@ -82,15 +80,15 @@ void loginadmin()
     else
     {
         system("cls");
+        main();
     }
 }
 
 void adminmenu()
 {
-    puts("\t\t\t===============================");
-    puts("\t\t\t SELAMAT DATANG DI MEDICINE");
-    puts("\t\t\t===============================");
-    puts("\t\t\t Selamat Datang Admin\n");
+    puts("################################");
+    puts("####       MENU ADMIN       ####");
+    puts("################################\n\n");
     puts("1. Input data obat");
     puts("2. update informasi obat ");
     puts("3. Lihat informasi obat");
@@ -151,14 +149,17 @@ void adminmenu()
 void dataobat(int n, int i)
 {
     system ("cls");
+    puts("################################");
+    puts("####     INPUT DATA OBAT    ####");
+    puts("################################\n\n");
     FILE *data_obat;
     data_obat=fopen("data_obat.dat","wb");
-    printf("Masukan banyak data yang ingin di input : ");
+    printf("Masukan banyak data obat 1-3 : ");
     scanf("%d",&n);
     getchar();
     for(i=0; i<n; i++)
     {
-        printf("%d. Nama Obat           : ",i+1);
+        printf("\n%d.  Nama Obat           : ",i+1);
         gets(dtobat.data_obat);
         printf("    kategori penyakit   : ");
         gets(dtobat.kt_penyakit);
@@ -169,14 +170,14 @@ void dataobat(int n, int i)
         fwrite(&dtobat,sizeof(dtobat),1,data_obat);
     }
     fclose(data_obat);
-    printf("\nOutput");
+    printf("\n\n\t\tOutput\n");
     data_obat=fopen("data_obat.dat","rb");
     while(fread(&dtobat,sizeof(dtobat),1,data_obat)==1)
     {
-        printf("\nNama Obat           : %s\n ",dtobat.data_obat);
-        printf("kategori penyakit   : %s\n",dtobat.kt_penyakit);
-        printf("Dosis               : %s\n ",dtobat.dt_dosis);
-        printf("Harga               : %s\n ",dtobat.dt_harga);
+        printf("\n\tNama Obat\t\t: %s\n ",dtobat.data_obat);
+        printf("\tkategori penyakit\t: %s\n",dtobat.kt_penyakit);
+        printf("\tDosis\t\t\t: %s\n ",dtobat.dt_dosis);
+        printf("\tHarga\t\t\t\: %s\n ",dtobat.dt_harga);
     }
     fclose(data_obat);
     system("pause");
@@ -184,14 +185,14 @@ void dataobat(int n, int i)
     adminmenu();
 }
 
-
-
 void updateobat()
 {
     system ("cls");
+    puts("################################");
+    puts("####    UPDATE DATA OBAT    ####");
+    puts("################################\n\n");
     FILE *data_obat;
     data_obat=fopen("data_obat.dat","wb");
-    printf("    \nEnter untuk edit data obat\n");
     gets(dtobat.data_obat);
     printf("    Nama Obat           : ");
     gets(dtobat.data_obat);
@@ -202,37 +203,33 @@ void updateobat()
     printf("    Harga               : ");
     gets(dtobat.dt_harga);
     fwrite(&dtobat,sizeof(dtobat),1,data_obat);
-
-
     fclose(data_obat);
-    printf("\n\nOutput\n");
+    printf("\n\n\tOutput\n");
     data_obat=fopen("data_obat.dat","rb");
-
-    printf("Nama Obat             : %s ",dtobat.data_obat);
-    printf("\nkategori penyakit   : %s ",dtobat.kt_penyakit);
-    printf("\nDosis               : %s ",dtobat.dt_dosis);
-    printf("\nHarga               : %s ",dtobat.dt_harga);
+    printf("Nama Obat\t\t: %s ",dtobat.data_obat);
+    printf("\nkategori penyakit\t: %s ",dtobat.kt_penyakit);
+    printf("\nDosis\t\t\t: %s ",dtobat.dt_dosis);
+    printf("\nHarga\t\t\t: %s ",dtobat.dt_harga);
     fclose(data_obat);
     system("pause");
     system("cls");
     adminmenu();
 }
 
-
-
-
 void infoobat()
 {
     system ("cls");
+    puts("################################");
+    puts("####     INFO DATA OBAT    ####");
+    puts("################################\n\n");
     FILE *data_obat;
     data_obat=fopen("data_obat.dat","rb");
     while(fread(&dtobat,sizeof(dtobat),1,data_obat)==1)
     {
-        printf("    Nama Obat           : %s\n ",dtobat.data_obat);
-        printf("    kategori penyakit   : %s\n ",dtobat.kt_penyakit);
-        printf("    Dosis               : %s\n ",dtobat.dt_dosis);
-        printf("    Harga               : %s\n ",dtobat.dt_harga);
-
+        printf("\nNama Obat\t\t: %s\n ",dtobat.data_obat);
+        printf("kategori penyakit\t: %s\n ",dtobat.kt_penyakit);
+        printf("Dosis\t\t\t: %s\n ",dtobat.dt_dosis);
+        printf("Harga\t\t\t: %s\n ",dtobat.dt_harga);
     }
     fclose(data_obat);
     system("pause");
@@ -240,25 +237,24 @@ void infoobat()
     adminmenu();
 }
 
-
-
 void hapuspesanan()
 {
     system ("cls");
+    puts("################################");
+    puts("####     HAPUS DATA OBAT    ####");
+    puts("################################\n\n");
     FILE *data_obat;
     FILE *file_hapus;
     data_obat=fopen("data_obat.dat","rb");
     file_hapus = fopen("file_hapus.dat", "wb");
-    printf("    \nEnter untuk edit data obat\n");
     gets(dtobat.data_obat);
-    printf("    Nama Obat           : ");
+    printf("Nama Obat   :");
     gets(dtobat.data_obat);
     while(fread(&dtobat,sizeof(dtobat),1,file_hapus)==1)
     {
         if(strcmp(file_hapus, dtobat.data_obat)!=0);
         fwrite(&dtobat,sizeof(dtobat),1,file_hapus);
     }
-
     fclose(data_obat);
     fclose(file_hapus);
     remove("data_obat.dat");
@@ -272,12 +268,14 @@ void hapuspesanan()
 void vakun()
 {
     system("cls");
+    puts("################################");
+    puts("####     VIRTUAL ACCOUNT    ####");
+    puts("################################\n\n");
     FILE *v_akun;
     v_akun=fopen("v_akun.dat","ab+");
     printf("Masukkan Kode tambahan : "),scanf("%s", &daftar.z);
     fflush(stdin);
-    printf("%s",daftar.z);
-
+    printf("\n\   %s + NO HP MEMBER\n\n\n",daftar.z);
     FILE *out=fopen("v_akun.dat","a");
     fprintf(out,"%s#STOP#\n", daftar.z);
     fclose(out);
@@ -289,10 +287,10 @@ void vakun()
 void upmemb()
 {
     system ("cls");
-    FILE *up_member;
-    up_member=fopen("db_user","wb");
+    FILE *db_user;
+    db_user=fopen("db_user.dat","wb");
     printf("    \nEnter untuk edit data member\n");
-    gets(daftar.up_member);
+    gets(daftar.db_user);
     printf("    Username           : ");
     gets(daftar.username);
     printf("    Password           : ");
@@ -303,18 +301,16 @@ void upmemb()
     gets(daftar.alamat);
     printf("    NO hp              : ");
     gets(daftar.telp);
-    fwrite(&daftar,sizeof(daftar),1,up_member);
-
-    fclose(up_member);
+    fwrite(&daftar,sizeof(daftar),1,db_user);
+    fclose(db_user);
     printf("\n\nOutput\n");
-    up_member=fopen("db_user","rb");
-
+    db_user=fopen("db_user","rb");
     printf("Username    : %s ",daftar.username);
     printf("\nPassword  : %s ",daftar.pass);
     printf("\nNama     : %s ",daftar.nama);
     printf("\nAlamat     : %s ",daftar.alamat);
     printf("\nNO hp     : %s ",daftar.telp);
-    fclose(up_member);
+    fclose(db_user);
     system("pause");
     system("cls");
     adminmenu();
@@ -323,15 +319,16 @@ void upmemb()
 void hapusmember()
 {
     system("cls");
+    puts("################################");
+    puts("####       HAPUS MEMBER     ####");
+    puts("################################\n\n");
     FILE *db_user;
     FILE *db_user2;
     db_user = fopen("db_user.dat", "rb");
     db_user2 = fopen("db_user.dat", "wb");
-
-    printf("\nHapus Semua Member :  ");
+    printf("\nHapus Semua Member (yes) :  ");
     fflush(stdin);
     gets(daftar.user);
-
     while(fread(&daftar,sizeof(daftar),1,db_user2)==1)
     {
         if(strcmp(db_user2,"yes")!=0);
@@ -350,10 +347,10 @@ void hapusmember()
 void registrasi()
 {
     system("cls");
-    db_user=fopen("save.dat","ab+");
-    puts("################################");
-    puts("#       FORM REGISTRASI        #");
-    puts("################################\n\n");
+    db_user=fopen("db_user.dat","ab+");
+    puts("#################################");
+    puts("####     FORM REGISTRASI     ####");
+    puts("#################################\n\n");
     printf("Username : "),scanf("%s", &daftar.username);
     fflush(stdin);
     printf("Password : "),scanf("%s", &daftar.pass);
@@ -366,34 +363,10 @@ void registrasi()
     fflush(stdin);
     printf("Regist Berhasil , Silahkan Login");
     getchar();
-
     FILE *out=fopen("db_user.dat","ab");
     fprintf(out,"%s#%s#%s#%s#%s#STOP#\n", daftar.username, daftar.pass, daftar.nama, daftar.alamat, daftar.telp);
     fclose(out);
     main();
-}
-
-void login(FILE *in, char username[100], char password[100])
-{
-    if(!feof(in))
-    {
-        fscanf(in,"%[^#]#", &daftar.username);
-        fflush(stdin);
-        fscanf(in,"%[^#]#", &daftar.pass);
-        fflush(stdin);
-        if(strcmp(daftar.username,username)==0 && strcmp(daftar.pass,password)==0)
-        {
-            fscanf(in,"%[^#]#", &logina.nama);
-            fflush(stdin);
-            strcpy(logina.status, "Berhasil");
-        }
-        else
-        {
-            fscanf(in,"\n");
-            fflush(stdin);
-            login(in, username, password);
-        }
-    }
 }
 
 void loginuser()
@@ -401,10 +374,9 @@ void loginuser()
     db_user = fopen("db_user.dat","rb+");
     system("cls");
 
-    puts("\t\t\t================================");
-    puts("\t\t\t SELAMAT DATANG DI TOKO OBAT    ");
-    puts("\t\t\t================================");
-    puts("\t\t\t\t Login User\n");
+    puts("################################");
+    puts("####       LOGIN ADMIN      ####");
+    puts("################################\n\n");
     while(logina.stt <= 3)
     {
         printf("Username : ");
@@ -440,10 +412,9 @@ void loginuser()
 
 void usermenu()
 {
-    puts("\t\t\t================================");
-    puts("\t\t\t SELAMAT DATANG DI MEDICINE");
-    puts("\t\t\t================================");
-    printf("\t\t\t\t SELAMAT DATANG %s \n",logina.nama);
+    puts("################################");
+    puts("####      MENU MEMBER       ####");
+    puts("################################\n\n");
     puts("Menu : ");
     puts("1. Buat Pesanan");
     puts("2. Exit ");;
@@ -474,12 +445,10 @@ void pesanan()
     char sakit;
     int n;
     data_obat=fopen("data_obat.dat","rb");
-    //penyakit=fopen("penyakit.dat","wb");
     fflush(stdin);
-    puts("\t\t\t================================");
-    puts("\t\t\t SELAMAT DATANG DI MEDICINE");
-    puts("\t\t\t================================");
-    printf("\t\t\t\t SELAMAT DATANG\n");
+    puts("################################");
+    puts("####     MENU PEMESANAN     ####");
+    puts("################################\n\n");
     while(fread(&dtobat,sizeof(dtobat),1,data_obat)==1)
     {
         printf("\nNama Obat         : %s\n ",dtobat.data_obat);
@@ -488,21 +457,17 @@ void pesanan()
         printf("Harga               : %s\n ",dtobat.dt_harga);
     }
     {
-        printf("Ketik Kategori penyakit untuk membeli obat 1-3 :");
+        printf("Ketik 1-3 untuk membeli obat    :");
         scanf("%d", &n);
         getchar();
     }
-    //fclose(penyakit);
     system("pause");
     system("cls");
-
-
-
-
     puts("Menu : ");
     puts("1. COD");
     puts("2. BANK ");;
-    printf("Pilihan : ");scanf("%d", &checkout);
+    printf("Pilihan : ");
+    scanf("%d", &checkout);
     switch(checkout)
     {
     case 1:
@@ -534,11 +499,13 @@ void cod()
 }
 
 void bank()
-{   FILE *v_akun;
+{
+    FILE *v_akun;
     char v_hasil;
     v_akun=fopen("v_akun.dat","a=rb");
     v_hasil=v_akun+v_hasil;
-    printf("NO Rekening Anda Adalah : %d\n",v_hasil);fflush(stdin);
+    printf("NO Rekening Anda Adalah : %d\n",v_hasil);
+    fflush(stdin);
     system("pause");
     system("cls");
     usermenu();
