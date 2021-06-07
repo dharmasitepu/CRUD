@@ -23,11 +23,15 @@ void bank();
 int p,luser,ladmin,total,berat,loginadminmenu,checkout;
 struct
 {
-    char nama[100],username[100],pass[100],cari1[100],cari2[100],status[100];
-    char user[100],nam[100],alamat[100],telp[100],tgl[100],usernamea[100],passa[50];
-    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100],z[100],penyakit[100],db_user[100];
-    int biaya, salah, stt ;
-} daftar,logina,dtobat,pesan;
+    //strcmp (daftar)
+    char z[100],db_user[100],username[100],pass[100],nama[100],alamat[100],telp[100],user[100];
+    int salah, stt;
+    //strcmp (logina)
+    char usernamea[100],passa[50];
+    //strcmp (dtobat)
+    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100];
+
+} daftar,logina,dtobat;
 
 void main()
 {
@@ -72,7 +76,7 @@ void loginadmin()
     printf("password : ");
     fflush(stdin);
     gets(logina.passa);
-    if(strcmp(logina.usernamea,"admin")==0&&strcmp(logina.passa,"admin")==0)
+    if(strcmp(logina.usernamea,"123")==0&&strcmp(logina.passa,"123")==0)
     {
         system("cls");
         adminmenu();
@@ -305,10 +309,10 @@ void upmemb()
     fclose(db_user);
     printf("\n\nOutput\n");
     db_user=fopen("db_user","rb");
-    printf("Username    : %s ",daftar.username);
+    printf("\nUsername  : %s ",daftar.username);
     printf("\nPassword  : %s ",daftar.pass);
-    printf("\nNama     : %s ",daftar.nama);
-    printf("\nAlamat     : %s ",daftar.alamat);
+    printf("\nNama      : %s ",daftar.nama);
+    printf("\nAlamat    : %s ",daftar.alamat);
     printf("\nNO hp     : %s ",daftar.telp);
     fclose(db_user);
     system("pause");
@@ -373,21 +377,20 @@ void loginuser()
 {
     db_user = fopen("db_user.dat","rb+");
     system("cls");
-
+    char usr[100],pws[100];
     puts("################################");
-    puts("####       LOGIN ADMIN      ####");
+    puts("####       LOGIN USER      ####");
     puts("################################\n\n");
-    while(logina.stt <= 3)
+    while(daftar.stt <= 3)
     {
         printf("Username : ");
-        fflush(stdin);
-        gets(daftar.username);
+        gets(usr);
         printf("Password : ");
-        gets(daftar.pass);
+        gets(pws);
 
         FILE *in=fopen("db_user.dat","r");
 
-        if(strcmp(daftar.username, daftar.pass) && strcmp(daftar.username, daftar.pass)!=0)
+        if(strcmp(daftar.username, usr) && strcmp(daftar.username, pws)!=0)
         {
             printf("Selamat Datang\n");
             system("pause");
@@ -397,11 +400,11 @@ void loginuser()
         else
         {
             printf("Username dan Password tidak match\n");
-            logina.salah++;
-            if(logina.salah == 3)
+            daftar.salah++;
+            if(daftar.salah == 3)
             {
                 printf("Akses ditolak\n");
-                logina.stt++;
+                daftar.stt++;
             }
         }
         logina.stt++;
@@ -441,8 +444,6 @@ void pesanan()
 {
     system ("cls");
     FILE *data_obat;
-    FILE *penyakit;
-    char sakit;
     int n;
     data_obat=fopen("data_obat.dat","rb");
     fflush(stdin);
