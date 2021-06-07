@@ -20,22 +20,23 @@ void infoobat();
 void vakun();
 void cod();
 void bank();
+void bri();
+void mandiri();
 int p,luser,ladmin,total,berat,loginadminmenu,checkout;
 struct
 {
     //strcmp (daftar)
-    char z[100],db_user[100],username[100],pass[100],nama[100],alamat[100],telp[100],user[100];
+    char z[20],db_user[20],username[20],pass[20],nama[20],alamat[20],telp[20],user[20];
     int salah, stt;
     //strcmp (logina)
-    char usernamea[100],passa[50];
+    char usernamea[20],passa[20];
     //strcmp (dtobat)
-    char data_obat[100],kt_penyakit[100],dt_harga[100],dt_dosis[100];
+    char data_obat[20],kt_penyakit[20],dt_harga[20],dt_dosis[20];
 
 } daftar,logina,dtobat;
 
 void main()
 {
-ulang:
     system("cls");
     puts("################################");
     puts("####       TOKO OBAT        ####");
@@ -291,6 +292,9 @@ void vakun()
 void upmemb()
 {
     system ("cls");
+    puts("################################");
+    puts("####      UPDATE MEMBER     ####");
+    puts("################################\n\n");
     FILE *db_user;
     db_user=fopen("db_user.dat","wb");
     printf("    \nEnter untuk edit data member\n");
@@ -375,12 +379,12 @@ void registrasi()
 
 void loginuser()
 {
-    db_user = fopen("db_user.dat","rb+");
     system("cls");
-    char usr[100],pws[100];
     puts("################################");
     puts("####       LOGIN USER      ####");
     puts("################################\n\n");
+    char usr[20],pws[20];
+    db_user = fopen("db_user.dat","rb+");
     while(daftar.stt <= 3)
     {
         printf("Username : ");
@@ -405,9 +409,12 @@ void loginuser()
             {
                 printf("Akses ditolak\n");
                 daftar.stt++;
+                system("pause");
+                system("cls");
+                main();
             }
         }
-        logina.stt++;
+        daftar.stt++;
     }
 }
 
@@ -502,11 +509,53 @@ void cod()
 void bank()
 {
     FILE *v_akun;
-    char v_hasil;
-    v_akun=fopen("v_akun.dat","a=rb");
-    v_hasil=v_akun+v_hasil;
-    printf("NO Rekening Anda Adalah : %d\n",v_hasil);
+    FILE *db_user;
+    v_akun=fopen("v_akun.dat","rb");
+    db_user=fopen("db_user.dat","rb");
+    printf("NO Rekening Anda Adalah : %s%s\n",daftar.z,daftar.telp);
     fflush(stdin);
+    system("pause");
+    system("cls");
+    puts("################################");
+    puts("####       PILIH BANK       ####");
+    puts("################################\n\n");
+    puts("PILIH JENIS BANK");
+    puts("1. MANDIRI");
+    puts("2. BRI ");;
+    printf("Pilihan : ");
+    scanf("%d",&luser);
+    switch(luser)
+    {
+    case 1:
+    {
+        mandiri();
+        break;
+    }
+    case 2:
+    {
+        bri();
+        break;
+        default :
+            printf ("Error!");
+        }
+    }
+}
+
+void mandiri()
+{
+    printf("Silahkan Transfer ke bank mandiri\n");
+    printf("NO REK :12121212121212\n");
+    printf("Terima Kasih\n");
+    system("pause");
+    system("cls");
+    usermenu();
+}
+
+void bri()
+{
+    printf("Silahkan Transfer ke bank BRI\n");
+    printf("NO REK :1313131313131313\n");
+    printf("Terima Kasih\n");
     system("pause");
     system("cls");
     usermenu();
