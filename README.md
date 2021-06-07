@@ -19,6 +19,12 @@ Simple CRUD using c language
 	  -cod
 	  -bank
 ```
+# FILE SYSTEM
+```
+- data_obat.dat	>> file_hapus.dat
+- db_user.dat	>> db_user2.dat
+- v_akun.dat
+```
 # CONTRIBUTOR
 - Dharma
 - Hayyul
