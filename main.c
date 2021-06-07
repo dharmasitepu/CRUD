@@ -1,3 +1,6 @@
+//Link Progres kami
+//https://codecollab.io/@dharmasitepu/TUBES%20ALPRO#
+//https://github.com/dharmasitepu/CRUD
 #include<stdio.h>
 #include<string.h>
 
@@ -23,6 +26,7 @@ void bank();
 void bri();
 void mandiri();
 int caseuser,caseadmin,total,berat,loginadminmenu,checkout,bankswitch;
+
 struct
 {
     //strcmp (daftar)
@@ -394,7 +398,7 @@ void loginuser()
 
         FILE *in=fopen("db_user.dat","r");
 
-        if(strcmp(usr,daftar.username) && strcmp(pws,daftar.username)!=0)
+        if(strcmp(usr,daftar.username)==0 && strcmp(pws,daftar.pass)==0)
         {
             printf("Selamat Datang\n");
             system("pause");
@@ -417,8 +421,6 @@ void loginuser()
         daftar.stt++;
     }
 }
-
-
 
 void usermenu()
 {
