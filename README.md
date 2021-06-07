@@ -26,7 +26,7 @@ Simple CRUD using c language
 - v_akun.dat
 ```
 # CONTRIBUTOR
-- Dharma
-- Hayyul
-- Boy
-- Zaydan
+- [x] Dharma
+- [x] Hayyul
+- [x] Boy
+- [x] Zaydan
