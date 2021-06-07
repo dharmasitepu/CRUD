@@ -1,5 +1,5 @@
 # CRUD
-Simple CRUD using c language
+Simple CRUD using c programming language
 # FLOW PROGRAM
 ```
 -main
