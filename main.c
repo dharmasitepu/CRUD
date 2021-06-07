@@ -22,7 +22,7 @@ void cod();
 void bank();
 void bri();
 void mandiri();
-int p,luser,ladmin,total,berat,loginadminmenu,checkout;
+int caseuser,caseadmin,total,berat,loginadminmenu,checkout,bankswitch;
 struct
 {
     //strcmp (daftar)
@@ -46,9 +46,9 @@ void main()
     puts("3. Login User ");
     puts("4. Exit");
     printf("\n\nPilih Menu : ");
-    scanf("%d",&p);
+    scanf("%d",&caseadmin);
     fflush(stdin);
-    switch(p)
+    switch(caseadmin)
     {
     case 1:
         loginadmin();
@@ -394,7 +394,7 @@ void loginuser()
 
         FILE *in=fopen("db_user.dat","r");
 
-        if(strcmp(daftar.username, usr) && strcmp(daftar.username, pws)!=0)
+        if(strcmp(usr,daftar.username) && strcmp(pws,daftar.username)!=0)
         {
             printf("Selamat Datang\n");
             system("pause");
@@ -429,8 +429,8 @@ void usermenu()
     puts("1. Buat Pesanan");
     puts("2. Exit ");;
     printf("Pilihan : ");
-    scanf("%d",&luser);
-    switch(luser)
+    scanf("%d",&caseuser);
+    switch(caseuser)
     {
     case 1:
     {
@@ -523,8 +523,8 @@ void bank()
     puts("1. MANDIRI");
     puts("2. BRI ");;
     printf("Pilihan : ");
-    scanf("%d",&luser);
-    switch(luser)
+    scanf("%d",&bankswitch);
+    switch(bankswitch)
     {
     case 1:
     {
