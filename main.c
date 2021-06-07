@@ -1,6 +1,3 @@
-//Link Progres kami
-//https://codecollab.io/@dharmasitepu/TUBES%20ALPRO#
-//https://github.com/dharmasitepu/CRUD
 #include<stdio.h>
 #include<string.h>
 
