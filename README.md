@@ -18,6 +18,9 @@ Simple CRUD using c programming language
 	1.pesanan
 	  -cod
 	  -bank
+	   - mandiri
+	   - bri
+	   
 ```
 # FILE SYSTEM
 ```
