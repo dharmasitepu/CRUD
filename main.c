@@ -1,8 +1,6 @@
-//Testing Remote VScode
 #include<stdio.h>
 #include<string.h>
 
-FILE *db_user2;
 FILE *db_user;
 FILE *data_obat;
 FILE *v_akun;
