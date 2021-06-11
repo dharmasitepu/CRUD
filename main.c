@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-// test commit
-// test checkout
-// test push
+
 FILE *db_user;
 FILE *data_obat;
 FILE *v_akun;
