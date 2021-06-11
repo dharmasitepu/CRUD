@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-// test lagi vscode
+// test checkout & push
 FILE *db_user;
 FILE *data_obat;
 FILE *v_akun;
