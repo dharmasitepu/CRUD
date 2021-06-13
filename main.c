@@ -26,12 +26,12 @@ int caseuser,caseadmin,total,berat,loginadminmenu,checkout,bankswitch;
 
 struct
 {
-    //strcmp (daftar)
+    //struct (daftar)
     char z[20],db_user[20],username[20],pass[20],nama[20],alamat[20],telp[20];
     int salah, stt;
-    //strcmp (logina)
+    //struct (logina)
     char usernamea[20],passa[20];
-    //strcmp (dtobat)
+    //struct (dtobat)
     char data_obat[20],kt_penyakit[20],dt_harga[20],dt_dosis[20];
 
 } daftar,logina,dtobat;
