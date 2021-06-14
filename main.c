@@ -461,7 +461,7 @@ void pesanan()
         printf("Harga               : %s\n ",dtobat.dt_harga);
     }
     {
-        printf("Ketik Kategori Penyakit untuk membeli obat :");
+        printf("Ketik nama obat untuk membeli :");
         scanf("%s", &dtobat.kt_penyakit);
         getchar();
     }
